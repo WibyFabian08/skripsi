@@ -4,7 +4,7 @@ import { Loading } from "../../elements";
 import { useDispatch } from "react-redux";
 import { ModalLampiran, ModalPenilaian } from "../../components";
 import { NotifContainer } from "../../elements";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   adminGetCalonKontraktorByLowonganId,
   updatePenilaianCalonKontraktor,
@@ -19,10 +19,12 @@ import {
   createRangking,
   getNormalisasi,
   getRangking,
+  pilihKontraktor,
   updateRangking,
 } from "../../redux/action/rangking";
 
 const ListCalonKontraktor = () => {
+  const navigate = useNavigate()
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPenilaian, setIsOpenPenilaian] = useState(false);
@@ -43,7 +45,7 @@ const ListCalonKontraktor = () => {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    if (e.target.type == "text" || e.target.type == "number") {
+    if (e.target.type === "text" || e.target.type === "number") {
       setInputData({
         ...inputData,
         [e.target.name]: e.target.value,
@@ -56,9 +58,13 @@ const ListCalonKontraktor = () => {
     }
   };
 
-  const handleCloseTender = () => {
+  const handlePilihKontraktor = (id) => {
+    const data = {
+      kontraktorId: id
+    }
+    dispatch(pilihKontraktor(params.id, data, navigate))
     dispatch(updateRangking(params.id, setIsLoadingUpdateRangking));
-  };
+  }
 
   const handleCreateRangking = () => {
     const data = {
@@ -131,7 +137,7 @@ const ListCalonKontraktor = () => {
     });
 
     setInputData(buffer);
-  }, []);
+  }, [formInput]);
 
   useEffect(() => {
     dispatch(getRangking(params.id, setHasilRangking));
@@ -298,7 +304,7 @@ const ListCalonKontraktor = () => {
               >
                 Anda Sudah Memberikan Penilaian Kepada Seluruh Calon Kontraktor
               </h6>
-              {dataPenilaian.length < 0 ? (
+              {dataPenilaian.length === 0 ? (
                 <p className="text-sm text-gray-400">
                   Lakukan Perhitungan Bobot Sekarang?
                 </p>
@@ -307,7 +313,7 @@ const ListCalonKontraktor = () => {
               )}
             </div>
 
-            {dataPenilaian.length < 0 && (
+            {dataPenilaian.length === 0 && (
               <div className="mt-5 mb-5">
                 <button
                   onClick={() => handleCratePenilaian()}
@@ -440,26 +446,28 @@ const ListCalonKontraktor = () => {
               )}
             </div>
 
-            <div className="mt-5">
-              <h6
-                style={{ color: "#0C0D36" }}
-                className="text-2xl font-semibold"
-              >
-                Pembobotan Sudah Dilakukan
-              </h6>
-              {hasilNormalisasi.length < 1 ? (
-                <p className="text-sm text-gray-400">
-                  Segera Lakukan Normalisasi dan Perangkingan Untuk Mendapat
-                  Calon Kontraktor Terbaik
-                </p>
-              ) : (
-                <p className="text-sm text-gray-400">
-                  Hasil Perhitungan Normalisasi
-                </p>
-              )}
-            </div>
+            {dataPenilaian.length > 0 && (
+              <div className="mt-5">
+                <h6
+                  style={{ color: "#0C0D36" }}
+                  className="text-2xl font-semibold"
+                >
+                  Pembobotan Sudah Dilakukan
+                </h6>
+                {hasilNormalisasi.length < 1 ? (
+                  <p className="text-sm text-gray-400">
+                    Segera Lakukan Normalisasi dan Perangkingan Untuk Mendapat
+                    Calon Kontraktor Terbaik
+                  </p>
+                ) : (
+                  <p className="text-sm text-gray-400">
+                    Hasil Perhitungan Normalisasi
+                  </p>
+                )}
+              </div>
+            )}
 
-            {hasilRangking.length < 1 && (
+            {dataPenilaian.length > 0 && (
               <div className="mt-5 mb-5">
                 <button
                   onClick={() => handleCreateRangking()}
@@ -621,6 +629,7 @@ const ListCalonKontraktor = () => {
                         Kontraktor
                       </th>
                       <th className="px-6 py-2 text-xs text-gray-500">Nilai</th>
+                      <th className="px-6 py-2 text-xs text-gray-500">Aksi</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white">
@@ -646,6 +655,16 @@ const ListCalonKontraktor = () => {
                               {data.nilai || "-"}
                             </div>
                           </td>
+                          <td className="px-6 py-4">
+                            <div className="text-sm text-center text-gray-500">
+                              <button
+                                onClick={() => handlePilihKontraktor(data.kontraktorId._id)}
+                                className="px-4 py-1 text-sm text-white bg-blue-400 rounded"
+                              >
+                                {isLoadingUpdateRangking ? "Loading" : "Pilih"}
+                              </button>
+                            </div>
+                          </td>
                         </tr>
                       );
                     })}
@@ -656,15 +675,20 @@ const ListCalonKontraktor = () => {
 
             {hasilRangking.length > 0 && (
               <div>
-                <p style={{ color: "#0C0D36" }} className="text-lg font-semibold">
+                <p
+                  style={{ color: "#0C0D36" }}
+                  className="text-lg font-semibold"
+                >
                   Hasil Perhitungan menunjukan{" "}
-                  <span className="font-bold">{hasilRangking[0].kontraktorId.fullname}</span> menjadi calon
-                  kontraktor dengan nilai tertinggi
+                  <span className="font-bold">
+                    {hasilRangking[0].kontraktorId.fullname}
+                  </span>{" "}
+                  menjadi calon kontraktor dengan nilai tertinggi
                 </p>
               </div>
             )}
 
-            {hasilRangking.length > 0 && (
+            {/* {hasilRangking.length > 0 && (
               <div className="mt-5 mb-5">
                 <button
                   onClick={() => handleCloseTender()}
@@ -673,7 +697,7 @@ const ListCalonKontraktor = () => {
                   {isLoadingUpdateRangking ? "Loading..." : "Close Tender"}
                 </button>
               </div>
-            )}
+            )} */}
           </>
         )}
       </div>

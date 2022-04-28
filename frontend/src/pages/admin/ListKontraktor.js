@@ -42,11 +42,6 @@ const ListKontraktor = () => {
     }
   };
 
-  const showModalDelete = (id) => {
-    setIsOpen(!isOpen);
-    setDeleteId(id);
-  };
-
   const handleDelete = () => {
     dispatch(
       deleteById(

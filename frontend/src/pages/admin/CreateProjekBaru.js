@@ -4,7 +4,7 @@ import { Button, InputFile, TextArea, TextInput } from "../../elements";
 import { useDispatch } from "react-redux";
 import { showError, showSuccess } from "../../utils/showNotif";
 import { NotifContainer } from "../../elements";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   createLowongan,
   getLowonganById,
@@ -12,8 +12,9 @@ import {
 } from "../../redux/action/lowonganProjek";
 
 const CreateProjekBaru = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const params = useParams();
+  const params = useParams()
 
   const dispatch = useDispatch();
 
@@ -89,12 +90,12 @@ const CreateProjekBaru = () => {
         <div className="w-full">
           <div className="border-b border-gray-200 shadow">
             <div className="mt-5 mb-5">
-              <Link
-                to={"/admin/projek-baru"}
+              <button
+                onClick={() => navigate(-1)}
                 className="px-4 py-1 text-sm text-white transition-all duration-200 bg-blue-400 rounded hover:bg-blue-500"
               >
                 Kembali
-              </Link>
+              </button>
             </div>
 
             <div className="p-5 bg-white shadow-lg">

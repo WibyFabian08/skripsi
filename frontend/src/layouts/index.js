@@ -139,6 +139,22 @@ const Layout = ({ children }) => {
                 <li
                   className={[
                     "flex items-center w-full px-2 py-1 rounded-xl hover:bg-gray-200 hover:text-blue-400",
+                    getNavLink("/admin/riwayat-tender"),
+                  ].join(" ")}
+                >
+                  <BsBuilding
+                    className={[getNavLink("/admin/riwayat-tender")].join(" ")}
+                  ></BsBuilding>
+                  <Link
+                    className="ml-1 font-semibold"
+                    to={"/admin/riwayat-tender"}
+                  >
+                    Riwayat Tender
+                  </Link>
+                </li>
+                <li
+                  className={[
+                    "flex items-center w-full px-2 py-1 rounded-xl hover:bg-gray-200 hover:text-blue-400",
                     getNavLink("/admin/kontraktor"),
                   ].join(" ")}
                 >

@@ -10,7 +10,6 @@ import Profile from "./Profile";
 import ListKontraktor from "./admin/ListKontraktor";
 import Detail from "./Detail";
 import ListImages from "./admin/ListImages";
-import Transaction from "./Transaction";
 import ListKriteria from "./admin/ListKriteria";
 import ListProjekBaru from "./admin/ListProjekBaru";
 import CreateProjekBaru from "./admin/CreateProjekBaru";
@@ -18,6 +17,8 @@ import LowonganProjek from "./kontraktor/LowonganProjek";
 import DetailLowongan from "./kontraktor/DetailLowongan";
 import ListCalonKontraktor from "./admin/ListCalonKontraktor";
 import ListTender from './kontraktor/ListTender'
+import RiwayatTender from "./admin/RiwayatTender";
+import ListHasilPemilihan from "./admin/ListHasilPemilihan";
 import Test from "./Test";
 
 export {
@@ -33,7 +34,6 @@ export {
   ListKontraktor,
   Detail,
   ListImages,
-  Transaction,
   ListKriteria,
   ListProjekBaru,
   CreateProjekBaru,
@@ -41,5 +41,7 @@ export {
   DetailLowongan,
   Test,
   ListCalonKontraktor,
-  ListTender
+  ListTender,
+  RiwayatTender,
+  ListHasilPemilihan
 };

@@ -68,3 +68,32 @@ export const updateRangking =
       console.log(err);
     }
   };
+
+export const pilihKontraktor = (id, data, navigate) => async (dispatch) => {
+  try {
+    const response = await api.pilihKontraktor(id, data)
+
+    if(response.data.success) {
+      console.log(response)
+      navigate('/admin')
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const getKontraktorTerpilih = (id, setIsLoadingGet, setPemenang, setIsOpen) => async (dispatch) => {
+  setIsLoadingGet(true)
+  try { 
+    const response = await api.getKontraktorTerpilih(id)
+    
+    if(response.data.success) {
+      setIsOpen(true)
+      setIsLoadingGet(false)
+      setPemenang(response.data.kontraktor)
+    }
+  } catch (err) {
+    setIsLoadingGet(false)
+    console.log(err)
+  }
+}

@@ -28,7 +28,7 @@ const ListTender = () => {
         setIsLoading
       )
     );
-  }, [dispatch]);
+  }, [dispatch, activeUser.data._id]);
 
   if (isLoading) {
     return <Loading></Loading>;

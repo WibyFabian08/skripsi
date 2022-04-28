@@ -68,7 +68,7 @@ const DetailLowongan = () => {
   };
 
   const handleChange = (e) => {
-    if (e.target.type == "text" || e.target.type == "number") {
+    if (e.target.type === "text" || e.target.type === "number") {
       setInputData({
         ...inputData,
         [e.target.name]: e.target.value,
@@ -78,7 +78,7 @@ const DetailLowongan = () => {
         ...file,
         [e.target.name]: e.target.value,
       });
-    } else if (e?.target?.value?.type != "application/pdf") {
+    } else if (e?.target?.value?.type !== "application/pdf") {
       showError("File upload haru pdf!");
     } else {
       setInputData({
@@ -94,7 +94,7 @@ const DetailLowongan = () => {
 
   useEffect(() => {
     dispatch(getLowonganById(params.id, setInput, setIsLoading));
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   useEffect(() => {
     dispatch(getAllFormInput(setFormInput));
@@ -108,7 +108,7 @@ const DetailLowongan = () => {
         setDataCheck
       )
     );
-  }, [dispatch, params.id]);
+  }, [dispatch, params.id, activeUser.data._id]);
 
   useEffect(() => {
     if (formInput.length > 0) {
@@ -122,7 +122,7 @@ const DetailLowongan = () => {
 
       setInputData(buffer);
     }
-  }, []);
+  }, [formInput]);
 
   if (isLoading) {
     return <Loading />;

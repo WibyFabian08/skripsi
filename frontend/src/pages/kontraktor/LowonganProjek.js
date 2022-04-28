@@ -60,16 +60,16 @@ const LowonganProjek = () => {
                         <p className="text-sm text-gray-500 ">
                           Item Pekerjaan :
                         </p>
-                          {data.itemPekerjaan.map((item, index2) => {
-                            return (
-                              <p
-                                key={index2}
-                                className="mb-2 ml-2 text-sm text-gray-500 truncate ..."
-                              >
-                                - {item || "-"}
-                              </p>
-                            );
-                          })}
+                        {data.itemPekerjaan.map((item, index2) => {
+                          return (
+                            <p
+                              key={index2}
+                              className="mb-2 ml-2 text-sm text-gray-500 truncate ..."
+                            >
+                              - {item || "-"}
+                            </p>
+                          );
+                        })}
                         <Link
                           to={`/kontraktor/lowongan-projek/detail/${data._id}`}
                           className="w-full px-4 py-2 font-semibold text-center text-white transition-all duration-300 bg-blue-400 rounded-md hover:bg-blue-500"
@@ -78,6 +78,14 @@ const LowonganProjek = () => {
                         </Link>
                       </div>
                     </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="w-full mt-5 text-xl">
+                    <p className="text-center" style={{ color: "#0C0D36" }}>
+                      Lowongan Proyek Kosong
+                    </p>
                   </div>
                 );
               }

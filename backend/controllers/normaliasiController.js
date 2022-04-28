@@ -3,6 +3,7 @@ const Kriteria = require("../models/Kriteria");
 const Penilaiankontraktor = require("../models/PenilaianKontraktor");
 const Rangking = require("../models/Rangking");
 const LowonganProyek = require("../models/LowonganProyek");
+const CalonKontraktor = require("../models/CalonKontraktor");
 
 exports.getNormalisasi = async (req, res) => {
   try {
@@ -167,6 +168,64 @@ exports.updateLowongan = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Projek telah selesai melakukan penilaian",
+    });
+  } catch (err) {
+    return res.status(200).json({
+      success: false,
+      message: "something went wrong on the server",
+    });
+  }
+};
+
+exports.piliihKontraktor = async (req, res) => {
+  try {
+    const kontraktor = await CalonKontraktor.find({
+      lowonganId: req.params.lowonganId,
+    });
+    const kontraktorId = req.body.kontraktorId;
+
+    kontraktor.forEach((data) => {
+      if (data.kontraktorId == kontraktorId) {
+        data.status = "Terpilih";
+      } else {
+        data.status = "Tidak Terpilih";
+      }
+    });
+
+    kontraktor.forEach(async (data) => {
+      const find = await CalonKontraktor.findOne({
+        kontraktorId: data.kontraktorId,
+      });
+
+      find.status = data.status;
+
+      await find.save();
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "pilih kontraktor success",
+    });
+  } catch (err) {
+    return res.status(200).json({
+      success: false,
+      message: "something went wrong on the server",
+    });
+  }
+};
+
+exports.getKontraktorTerpilih = async (req, res) => {
+  try {
+    const kontraktor = await CalonKontraktor.findOne({
+      lowonganId: req.params.lowonganId,
+      status: "Terpilih"
+    });
+
+
+    return res.status(200).json({
+      success: true,
+      message: "pilih kontraktor success",
+      kontraktor
     });
   } catch (err) {
     return res.status(200).json({

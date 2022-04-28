@@ -18,7 +18,6 @@ import {
   ListKontraktor,
   Detail,
   ListImages,
-  Transaction,
   ListKriteria,
   ListProjekBaru,
   CreateProjekBaru,
@@ -26,7 +25,9 @@ import {
   DetailLowongan,
   Test,
   ListCalonKontraktor,
-  ListTender
+  ListTender,
+  RiwayatTender,
+  ListHasilPemilihan
 } from "./pages";
 
 import {
@@ -107,6 +108,14 @@ function App() {
               }
             ></Route>
             <Route
+              path="/admin/hasil-pemilihan/:id"
+              element={
+                <AdminRoute>
+                  <ListHasilPemilihan />
+                </AdminRoute>
+              }
+            ></Route>
+            <Route
               path="/admin/create-projek"
               element={
                 <AdminRoute>
@@ -119,6 +128,14 @@ function App() {
               element={
                 <AdminRoute>
                   <CreateProjekBaru />
+                </AdminRoute>
+              }
+            ></Route>
+            <Route
+              path="/admin/riwayat-tender"
+              element={
+                <AdminRoute>
+                  <RiwayatTender />
                 </AdminRoute>
               }
             ></Route>

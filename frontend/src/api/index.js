@@ -127,3 +127,5 @@ export const getNormalisasi = (id) => API.get(`/normalisasi/get/normalisasi/${id
 export const getRangking = (id) => API.get(`/normalisasi/get/rangking/${id}`)
 export const createRangking = (id) => API.post(`/normalisasi/create`, id)
 export const updateRangking = (id) => API.post(`/normalisasi/update/${id}`,)
+export const pilihKontraktor = (id, data) => API.post(`/normalisasi/pilih/calon-kontraktor/${id}`, data)
+export const getKontraktorTerpilih = (id) => API.get(`/normalisasi/get/terpilih/${id}`)

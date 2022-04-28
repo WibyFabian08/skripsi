@@ -76,14 +76,9 @@ const Test = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formInput, setFormInput] = useState([]);
   const [inputData, setInputData] = useState({});
-  const [options, setOptions] = useState([])
-
-  const handleChageAdd = (e) => {
-    console.log(e)
-  }
 
   const handleChange = (e) => {
-    if (e.target.type == "text" || e.target.type == "number") {
+    if (e.target.type === "text" || e.target.type === "number") {
       setInputData({
         ...inputData,
         [e.target.name]: e.target.value,
@@ -126,7 +121,7 @@ const Test = () => {
     <div className="container justify-center mx-auto pt-11">
       {formInput.length > 0 &&
         formInput.map((data, index) => {
-          if (data.type == "input") {
+          if (data.type === "input") {
             return (
               <div key={index}>
                 <TextInput

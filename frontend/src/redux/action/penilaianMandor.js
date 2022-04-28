@@ -8,6 +8,12 @@ export const createPenilaianKontaktor =
 
       if (response.data.success) {
         setIsLoadingPenilaian(false);
+
+        const dataPenilaian = await api.getPenilianKontraktorByLowonganId(data.lowonganId);
+
+      if (dataPenilaian.data.success) {
+        setDataPenilaian(dataPenilaian.data.data);
+      }
       }
     } catch (err) {
       setIsLoadingPenilaian(false);

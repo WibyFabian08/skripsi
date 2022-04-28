@@ -159,7 +159,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getKinerjaKontraktor(setKinerja));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (activeUser !== null) {
